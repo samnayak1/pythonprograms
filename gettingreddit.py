@@ -10,7 +10,14 @@ REDDITUSERNAME=os.getenv('REDDITUSERNAME')
 REDDITPASSWORD=os.getenv('REDDITPASSWORD')
 
 reddit=praw.Reddit(client_id=CLIENT_ID,client_secret=CLIENT_SECRET,username=REDDITUSERNAME,password=REDDITPASSWORD,user_agent='used to scrape data for educational purposes')
+#for submission in reddit.front.hot():   for hot posts on the front page
+   # print(submission)
+
+###########################################################
+
 subreddit=reddit.subreddit('soccer')
+
+
 
 hot_posts=subreddit.hot(limit=3)
 
@@ -26,4 +33,7 @@ for submission in hot_posts:
            # if len(comment.replies)>0:
             #    for reply in comment.replies:
             #        print('REPLY',reply.body)
+            
+
+
 
