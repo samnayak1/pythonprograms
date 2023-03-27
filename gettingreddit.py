@@ -12,10 +12,18 @@ REDDITPASSWORD=os.getenv('REDDITPASSWORD')
 reddit=praw.Reddit(client_id=CLIENT_ID,client_secret=CLIENT_SECRET,username=REDDITUSERNAME,password=REDDITPASSWORD,user_agent='used to scrape data for educational purposes')
 subreddit=reddit.subreddit('soccer')
 
-hot_python=subreddit.hot(limit=5)
+hot_posts=subreddit.hot(limit=3)
 
-for submission in hot_python:
+for submission in hot_posts:
     if not submission.stickied:
-        print('Title:{} ups:{} downs{} have we visited {} '.format(submission.title,submission.ups,submission.downs,submission.visited))
+       #print('Title:{} ups:{} downs{} have we visited {} '.format(submission.title,submission.ups,submission.downs,submission.visited))
+        comments=submission.comments.list()
+        for comment in comments:
+            print('Parent Id',comment.parent())
+            print('Comment',comment.id)
+            print(comment.body)
 
+           # if len(comment.replies)>0:
+            #    for reply in comment.replies:
+            #        print('REPLY',reply.body)
 
