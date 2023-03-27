@@ -15,17 +15,24 @@ reddit=praw.Reddit(client_id=CLIENT_ID,client_secret=CLIENT_SECRET,username=REDD
 
 ###########################################################
 
-subreddit=reddit.subreddit('soccer')
+subreddit=reddit.subreddit('neoliberal')
 
 
-
+'''
 hot_posts=subreddit.hot(limit=3)
 
 for submission in hot_posts:
     if not submission.stickied:
        #print('Title:{} ups:{} downs{} have we visited {} '.format(submission.title,submission.ups,submission.downs,submission.visited))
-        comments=submission.comments.list()
-        for comment in comments:
+       
+       #submission.comments.list() creates a breath first search of comments
+       #to remove the 'more comments' tag and replace it with actual replies , use
+       # submission.comments.replace_more(limit=None)    //remove the 'more comments' tag 
+       # comment in submission.comments.list():   //then convert it into a list and loop through it
+       #    //inside the for loop 
+       # However,comments are so deep, so it takes a lot of data to parse if it is a large comment section
+        comments=submission.comments.list()    #convert the comments into a list
+        for comment in comments:               # loop through
             print('Parent Id',comment.parent())
             print('Comment',comment.id)
             print(comment.body)
@@ -33,7 +40,18 @@ for submission in hot_posts:
            # if len(comment.replies)>0:
             #    for reply in comment.replies:
             #        print('REPLY',reply.body)
+
             
+            '''
+
+####################################################
+            
+for comment in subreddit.stream.submissions():
+    try:
+        print(comment.body)
+    except Exception as e:
+        pass
+
 
 
 
